@@ -2,12 +2,16 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { MemoryService } from "./services/memoryService";
 import { MemoryViewProvider } from "./memoryViewProvider";
+import { registerMemoryTools } from "./tools";
 
 const memoryService = new MemoryService();
 
 export async function activate(context: vscode.ExtensionContext) {
   await memoryService.init(context);
   console.log("Agent Memory: DB Initialized");
+
+  // Register tools for Copilot Agent Mode
+  registerMemoryTools(context, memoryService);
 
   const memoryViewProvider = new MemoryViewProvider(memoryService);
   const treeView = vscode.window.createTreeView("agentMemoryView", {
@@ -451,7 +455,6 @@ export async function activate(context: vscode.ExtensionContext) {
       contextBlock = "No relevant code found in memory database.\n";
     }
 
-    // C. Prepare messages for the LLM
     const messages = [
       vscode.LanguageModelChatMessage.User(
         `You are a helpful coding assistant with access to a memory database. 

@@ -16,6 +16,11 @@ Standard LLM context windows are limited. When you work on large projects, Copil
 -   **Smart Chunking**: Uses AST (Abstract Syntax Tree) parsing to split code by logical units (functions, classes) rather than arbitrary lines. Supports TypeScript, Python, C++, Go, Rust, Java, and more.
 -   **Local & Private**: All embeddings and vector data are generated and stored locally on your machine.
 -   **Seamless Integration**: Works directly with GitHub Copilot Chat via the `@memory` participant.
+-   **🆕 Agent Mode Support**: The extension now provides tools that Copilot's Agent Mode can use autonomously:
+    -   `#searchMemory` - Search through indexed code semantically
+    -   `#indexFile` - Add files to the memory index
+    -   `#listIndexed` - List all indexed files
+    -   `#clearMemory` - Remove files from the index
 -   **Memory Management**:
     -   **"Memory Files" View**: See exactly what files are indexed, grouped by folder.
     -   **Visual Inspection**: View the actual text chunks and vector data generated for any file.
@@ -44,6 +49,26 @@ Click the **Agent Memory** icon in the Activity Bar (database icon) to open the 
 -   **View Chunks**: Right-click a file -> **View Chunks** to see how your code was split.
 -   **View Vectors**: Right-click a file -> **View Vectors** to inspect the raw vector data.
 -   **Delete**: Remove files or folders from the index.
+
+### 4. Using with Agent Mode (NEW!)
+When Copilot is in **Agent Mode**, it can autonomously use the memory tools to help with your tasks:
+
+1. **Switch to Agent Mode**: In Copilot Chat, select "Agent" mode from the dropdown.
+2. **Reference tools directly**: You can reference tools in your prompts using `#`:
+   ```
+   Can you #searchMemory for how the authentication is implemented?
+   Please #indexFile for the src/services/auth.ts file
+   Show me #listIndexed files
+   ```
+3. **Autonomous usage**: In Agent Mode, Copilot will automatically decide when to search your indexed memory to answer questions about your codebase.
+
+**Available Tools:**
+| Tool | Reference | Description |
+|------|-----------|-------------|
+| Search Memory | `#searchMemory` | Semantically search through indexed code |
+| Index File | `#indexFile` | Add a file to the memory database |
+| List Indexed | `#listIndexed` | Show all files currently in memory |
+| Clear Memory | `#clearMemory` | Remove files from the index |
 
 ## Configuration
 
