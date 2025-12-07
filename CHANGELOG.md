@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/yensubldg/Agent-Memory/compare/v0.0.12...v0.0.13) (2025-12-07)
+
+
+### Bug Fixes
+
+* update .vscodeignore to exclude unused platform binaries and improve node_modules exclusions ([264a951](https://github.com/yensubldg/Agent-Memory/commit/264a9513f71ff4c782e8da3029868354e42acf58))
+
 ### [0.0.12](https://github.com/yensubldg/Agent-Memory/compare/v0.0.11...v0.0.12) (2025-12-07)
 
 
