@@ -1,6 +1,6 @@
 {
-  "name": "agent-memory",
-  "displayName": "Agent Memory",
+  "name": "agent-memory-indexer",
+  "displayName": "Agent Memory Indexer",
   "description": "Local RAG for GitHub Copilot - Index your codebase into a vector database for enhanced AI-powered code search and understanding",
   "version": "0.0.4",
   "publisher": "yensubldg",
@@ -17,7 +17,7 @@
   "activationEvents": [
     "onStartupFinished"
   ],
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -202,10 +202,14 @@
     }
   },
   "scripts": {
-    "postinstall": "mkdir -p out && cp node_modules/web-tree-sitter/tree-sitter.wasm out/tree-sitter.wasm",
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "postinstall": "mkdir -p dist && cp node_modules/web-tree-sitter/tree-sitter.wasm dist/tree-sitter.wasm",
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && node esbuild.js --production",
+    "check-types": "tsc --noEmit",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test",
@@ -221,8 +225,10 @@
     "@types/vscode": "^1.106.1",
     "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.27.1",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",
+    "npm-run-all": "^4.1.5",
     "standard-version": "^9.5.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.1"
