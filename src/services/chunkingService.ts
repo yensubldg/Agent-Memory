@@ -20,8 +20,17 @@ export class ChunkingService {
 
     async init(context: vscode.ExtensionContext) {
         try {
+            if (!context || !context.extensionPath) {
+                throw new Error('Invalid extension context');
+            }
             this.context = context;
-            await Parser.init();
+            const wasmPath = path.join(context.extensionPath, 'dist', 'tree-sitter.wasm');
+            console.log('Loading tree-sitter WASM from:', wasmPath);
+            await Parser.init({
+                locateFile(scriptName: string, scriptDirectory: string) {
+                    return wasmPath;
+                }
+            });
             this.parser = new Parser();
             console.log('ChunkingService initialized with tree-sitter');
         } catch (error) {
@@ -37,7 +46,7 @@ export class ChunkingService {
      * @returns true if language was loaded successfully, false otherwise
      */
     async loadLanguage(languageId: string): Promise<boolean> {
-        if (!this.context || !this.parser) {
+        if (!this.context || !this.context.extensionPath || !this.parser) {
             return false;
         }
 

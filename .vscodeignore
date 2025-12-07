@@ -2,7 +2,7 @@
 .vscode-test/**
 .github/**
 .husky/**
-out/**
+dist/**
 src/**
 .gitignore
 .yarnrc
@@ -15,7 +15,6 @@ vsc-extension-quickstart.md
 esbuild.js
 commitlint.config.js
 .editorconfig
-LICENSE
 CHANGELOG.md
 node_modules/**
 !node_modules/@lancedb/**/*.node

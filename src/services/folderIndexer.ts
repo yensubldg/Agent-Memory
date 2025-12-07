@@ -25,7 +25,6 @@ export class FolderIndexer {
             '**/node_modules/**',
             '**/dist/**',
             '**/build/**',
-            '**/out/**',
             '**/.git/**',
             '**/.vscode/**',
             '**/coverage/**',

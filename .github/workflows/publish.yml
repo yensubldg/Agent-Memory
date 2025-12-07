@@ -8,6 +8,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
       - name: Checkout code
@@ -25,6 +27,9 @@ jobs:
       - name: Package extension
         run: npm run package
 
+      - name: Create VSIX
+        run: npx @vscode/vsce package
+
       - name: Publish to VS Code Marketplace
         run: npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }}
         env:
@@ -36,5 +41,9 @@ jobs:
           files: |
             *.vsix
           generate_release_notes: true
+          body: |
+            **Install from VS Code Marketplace:** [Agent Memory Indexer](https://marketplace.visualstudio.com/items?itemName=yensubldg.agent-memory-indexer)
+            
+            Or download the VSIX file below and install manually.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

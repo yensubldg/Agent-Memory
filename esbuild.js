@@ -13,9 +13,15 @@ async function main() {
     sourcesContent: false,
     platform: "node",
     outfile: "dist/extension.js",
-    external: ["vscode", "*.node"],
+    external: [
+      "vscode",
+      "@lancedb/lancedb",
+      "@xenova/transformers",
+      "onnxruntime-node",
+      "sharp",
+      "web-tree-sitter"
+    ],
     logLevel: "info",
-    loader: { ".node": "copy" },
     plugins: [
       {
         name: "umd2esm",
