@@ -2,7 +2,7 @@
   "name": "agent-memory-indexer",
   "displayName": "Agent Memory Indexer",
   "description": "Local RAG for GitHub Copilot - Index your codebase into a vector database for enhanced AI-powered code search and understanding",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "yensubldg",
   "repository": {
     "type": "git",
