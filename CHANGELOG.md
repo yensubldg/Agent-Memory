@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12](https://github.com/yensubldg/Agent-Memory/compare/v0.0.11...v0.0.12) (2025-12-07)
+
+
+### Bug Fixes
+
+* remove node_modules exclusions from .vscodeignore ([2d10349](https://github.com/yensubldg/Agent-Memory/commit/2d103499b5f76f48a40fb04daa88a4a841bc39f1))
+* update .vscodeignore to correctly include node modules for lancedb, onnxruntime-node, and sharp ([ed49409](https://github.com/yensubldg/Agent-Memory/commit/ed49409168d4dafd7c04b46db7ead952f9965203))
+
 ### [0.0.11](https://github.com/yensubldg/Agent-Memory/compare/v0.0.10...v0.0.11) (2025-12-07)
 
 ### [0.0.10](https://github.com/yensubldg/Agent-Memory/compare/v0.0.9...v0.0.10) (2025-12-07)
