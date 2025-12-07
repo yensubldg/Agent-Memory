@@ -1,0 +1,231 @@
+{
+  "name": "agent-memory",
+  "displayName": "Agent Memory",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.106.1"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "agent-memory.indexFile",
+        "title": "Add File to Memory Index"
+      },
+      {
+        "command": "agent-memory.indexFolder",
+        "title": "Add Folder to Memory Index",
+        "icon": "$(folder)"
+      },
+      {
+        "command": "agent-memory.showIndexedFiles",
+        "title": "Agent Memory: Show Indexed Files"
+      },
+      {
+        "command": "agent-memory.refreshView",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "agent-memory.clearAll",
+        "title": "Clear All Memory Indexes",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "agent-memory.deleteFile",
+        "title": "Remove from Memory",
+        "icon": "$(close)"
+      },
+      {
+        "command": "agent-memory.deleteFolder",
+        "title": "Remove Folder from Memory",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "agent-memory.viewFileChunks",
+        "title": "View Chunks",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "agent-memory.viewFileVectors",
+        "title": "View Vectors",
+        "icon": "$(graph)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "agent-memory-container",
+          "title": "Agent Memory",
+          "icon": "$(database)"
+        }
+      ]
+    },
+    "views": {
+      "agent-memory-container": [
+        {
+          "id": "agentMemoryView",
+          "name": "Indexed Files",
+          "icon": "$(database)"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "agent-memory.refreshView",
+          "when": "view == agentMemoryView",
+          "group": "navigation@1"
+        },
+        {
+          "command": "agent-memory.clearAll",
+          "when": "view == agentMemoryView",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "agent-memory.viewFileChunks",
+          "when": "view == agentMemoryView && viewItem == memoryFile",
+          "group": "inline@1"
+        },
+        {
+          "command": "agent-memory.viewFileVectors",
+          "when": "view == agentMemoryView && viewItem == memoryFile",
+          "group": "inline@2"
+        },
+        {
+          "command": "agent-memory.deleteFile",
+          "when": "view == agentMemoryView && viewItem == memoryFile",
+          "group": "inline@3"
+        },
+        {
+          "command": "agent-memory.deleteFolder",
+          "when": "view == agentMemoryView && viewItem == memoryFolder",
+          "group": "inline"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "agent-memory.indexFile",
+          "when": "!explorerResourceIsFolder",
+          "group": "agentMemory@1"
+        },
+        {
+          "command": "agent-memory.indexFolder",
+          "when": "explorerResourceIsFolder",
+          "group": "agentMemory@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "agent-memory.indexFile",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "agent-memory.indexFolder"
+        }
+      ]
+    },
+    "chatParticipants": [
+      {
+        "id": "agent.memory",
+        "name": "memory",
+        "description": "Ask questions about indexed code",
+        "isSticky": true
+      }
+    ],
+    "configuration": {
+      "title": "Agent Memory",
+      "properties": {
+        "agentMemory.storageScope": {
+          "type": "string",
+          "enum": [
+            "global",
+            "workspace"
+          ],
+          "default": "workspace",
+          "description": "Where to store the memory index. 'global' shares memory across all VS Code instances. 'workspace' keeps it isolated to the current project."
+        },
+        "agentMemory.indexing.maxFileSize": {
+          "type": "number",
+          "default": 1048576,
+          "description": "Maximum file size to index in bytes (default: 1MB)"
+        },
+        "agentMemory.indexing.maxFiles": {
+          "type": "number",
+          "default": 500,
+          "description": "Maximum number of files to index in a folder"
+        },
+        "agentMemory.indexing.excludePatterns": {
+          "type": "array",
+          "default": [
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/build/**",
+            "**/out/**",
+            "**/.git/**",
+            "**/coverage/**",
+            "**/*.min.js"
+          ],
+          "description": "Glob patterns for files to exclude from indexing"
+        },
+        "agentMemory.indexing.includeExtensions": {
+          "type": "array",
+          "default": [
+            ".ts",
+            ".tsx",
+            ".js",
+            ".jsx",
+            ".py",
+            ".java",
+            ".c",
+            ".cpp",
+            ".go",
+            ".rs"
+          ],
+          "description": "File extensions to include when indexing folders"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "postinstall": "cp node_modules/web-tree-sitter/tree-sitter.wasm out/tree-sitter.wasm",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "release": "standard-version",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.106.1",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.1",
+    "husky": "^9.1.7",
+    "standard-version": "^9.5.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1"
+  },
+  "dependencies": {
+    "@lancedb/lancedb": "^0.22.3",
+    "@xenova/transformers": "^2.17.2",
+    "uuid": "^13.0.0",
+    "web-tree-sitter": "^0.25.10"
+  }
+}
