@@ -16,7 +16,7 @@ async function main() {
     external: [
       "vscode",
       "@lancedb/lancedb",
-      "@xenova/transformers",
+      "@xenova/transformers", 
       "onnxruntime-node",
       "sharp",
       "web-tree-sitter"

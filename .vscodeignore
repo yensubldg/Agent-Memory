@@ -15,3 +15,42 @@ esbuild.js
 commitlint.config.js
 .editorconfig
 CHANGELOG.md
+
+# Exclude dev dependencies
+node_modules/**/test/**
+node_modules/**/tests/**
+node_modules/**/*.md
+node_modules/**/.github/**
+node_modules/**/docs/**
+node_modules/**/example/**
+node_modules/**/examples/**
+node_modules/**/*.ts
+node_modules/**/*.map
+node_modules/**/.DS_Store
+
+# Exclude all dev dependencies and unnecessary files
+node_modules/**/.github
+node_modules/**/test
+node_modules/**/tests  
+node_modules/**/docs
+node_modules/**/example
+node_modules/**/examples
+node_modules/**/*.md
+node_modules/**/*.markdown
+node_modules/**/*.ts
+node_modules/**/*.map
+node_modules/**/.DS_Store
+node_modules/**/.eslintrc*
+node_modules/**/.npmignore
+node_modules/**/tsconfig.json
+node_modules/**/LICENSE*
+node_modules/**/CHANGELOG*
+
+# Exclude unused platform binaries
+node_modules/@lancedb/lancedb-darwin-*
+node_modules/@lancedb/lancedb-linux-*
+node_modules/@lancedb/lancedb-win32-arm64-*
+node_modules/onnxruntime-node/bin/napi-v3/darwin
+node_modules/onnxruntime-node/bin/napi-v3/linux
+node_modules/sharp/vendor/*/darwin*
+node_modules/sharp/vendor/*/linux*
