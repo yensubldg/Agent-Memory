@@ -106,10 +106,26 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/) a
     -   Update `CHANGELOG.md` with commits since the last release.
     -   Commit the changes and tag the release.
 
-3.  **Push**:
+3.  **Push**: This will trigger the GitHub Action to publish to the marketplace:
     ```bash
     git push --follow-tags origin main
     ```
+
+### Publishing to VS Code Marketplace
+
+**Automated Publishing** (via GitHub Actions):
+1.  Create a Personal Access Token (PAT) from [Azure DevOps](https://dev.azure.com/):
+    -   Click on your profile → **Security** → **Personal access tokens**.
+    -   Create a new token with **Marketplace (Manage)** scope.
+2.  Add the token to your GitHub repository secrets:
+    -   Go to **Settings** → **Secrets and variables** → **Actions**.
+    -   Add a new secret named `VSCE_PAT` with your token.
+3.  Push a tag (via `npm run release`) to trigger automatic publishing.
+
+**Manual Publishing**:
+```bash
+npx @vscode/vsce publish
+```
 
 ### Packaging
 To create a VSIX file for manual installation:
