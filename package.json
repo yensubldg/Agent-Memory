@@ -2,7 +2,7 @@
   "name": "agent-memory",
   "displayName": "Agent Memory",
   "description": "Local RAG for GitHub Copilot - Index your codebase into a vector database for enhanced AI-powered code search and understanding",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "yensubldg",
   "repository": {
     "type": "git",
@@ -202,7 +202,7 @@
     }
   },
   "scripts": {
-    "postinstall": "cp node_modules/web-tree-sitter/tree-sitter.wasm out/tree-sitter.wasm",
+    "postinstall": "mkdir -p out && cp node_modules/web-tree-sitter/tree-sitter.wasm out/tree-sitter.wasm",
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
