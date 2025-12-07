@@ -16,9 +16,9 @@ commitlint.config.js
 .editorconfig
 CHANGELOG.md
 node_modules/**
-!node_modules/@lancedb/**/*.node
-!node_modules/onnxruntime-node/**/*.node
-!node_modules/sharp/**/*.node
+!node_modules/@lancedb/**
 !node_modules/@xenova/**
 !node_modules/uuid/**
 !node_modules/web-tree-sitter/**
+!node_modules/onnxruntime-node/**
+!node_modules/sharp/**
