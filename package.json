@@ -2,7 +2,7 @@
   "name": "agent-memory-indexer",
   "displayName": "Agent Memory Indexer",
   "description": "Local RAG for GitHub Copilot - Index your codebase into a vector database for enhanced AI-powered code search and understanding",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "icon": "media/memory.jpg",
   "publisher": "yensubldg",
   "repository": {
@@ -148,6 +148,107 @@
         "fullName": "Memory",
         "description": "Ask questions about indexed code",
         "isSticky": true
+      }
+    ],
+    "languageModelTools": [
+      {
+        "name": "agent-memory_search_memory",
+        "tags": [
+          "memory",
+          "search",
+          "code",
+          "rag"
+        ],
+        "toolReferenceName": "searchMemory",
+        "displayName": "Search Memory",
+        "icon": "$(search)",
+        "userDescription": "Search through indexed code in the memory database",
+        "modelDescription": "Searches the vector database for code snippets that are semantically similar to the query. Use this tool when you need to find relevant code from previously indexed files. Returns matching code snippets with their file paths. Best used for finding implementations, understanding codebase patterns, or locating specific functionality.",
+        "canBeReferencedInPrompt": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "The search query to find relevant code. Can be a natural language description of what you're looking for, function names, or code patterns."
+            },
+            "limit": {
+              "type": "number",
+              "description": "Maximum number of results to return. Default is 5.",
+              "default": 5
+            }
+          },
+          "required": [
+            "query"
+          ]
+        }
+      },
+      {
+        "name": "agent-memory_index_file",
+        "tags": [
+          "memory",
+          "index",
+          "add"
+        ],
+        "toolReferenceName": "indexFile",
+        "displayName": "Index File",
+        "icon": "$(add)",
+        "userDescription": "Add a file to the memory index for semantic search",
+        "modelDescription": "Indexes a source code file into the memory database. The file is chunked intelligently based on its language (functions, classes, etc.) and embeddings are generated for each chunk. Once indexed, the file's content can be searched using the search_memory tool. Use this when you need to add a specific file to the searchable memory.",
+        "canBeReferencedInPrompt": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filepath": {
+              "type": "string",
+              "description": "The absolute path to the file to index. The file must exist and be readable."
+            }
+          },
+          "required": [
+            "filepath"
+          ]
+        }
+      },
+      {
+        "name": "agent-memory_list_indexed",
+        "tags": [
+          "memory",
+          "list",
+          "files"
+        ],
+        "toolReferenceName": "listIndexed",
+        "displayName": "List Indexed Files",
+        "icon": "$(list-tree)",
+        "userDescription": "List all files currently indexed in memory",
+        "modelDescription": "Returns a list of all files that have been indexed into the memory database, along with the number of chunks for each file. Use this to see what code is currently available for searching, or to verify that a file has been indexed.",
+        "canBeReferencedInPrompt": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "agent-memory_clear_memory",
+        "tags": [
+          "memory",
+          "clear",
+          "delete"
+        ],
+        "toolReferenceName": "clearMemory",
+        "displayName": "Clear Memory",
+        "icon": "$(trash)",
+        "userDescription": "Remove files from the memory index",
+        "modelDescription": "Removes indexed files from the memory database. Can remove a specific file by providing its filepath, or clear all indexed files if no filepath is specified. Use with caution as this permanently removes the indexed data.",
+        "canBeReferencedInPrompt": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filepath": {
+              "type": "string",
+              "description": "Optional: The absolute path of a specific file to remove from the index. If not provided, ALL indexed files will be cleared."
+            }
+          }
+        }
       }
     ],
     "configuration": {
